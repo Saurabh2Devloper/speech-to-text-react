@@ -29,13 +29,13 @@ export default function App() {
       </div>
 
       <div className='btn'>
-        <button onClick={copyTextToClipboard} disabled={transcript.length === 0}>
+        <button onClick={copyTextToClipboard} style={{margin:"30px"}} disabled={transcript.length === 0}>
           Copy Text
         </button>
-        <button onClick={startListening} disabled={listening}>
+        <button onClick={startListening}   disabled={listening}>
           Start Listening
         </button>
-        <button onClick={stopListening} disabled={!listening}>
+        <button onClick={stopListening} style={{margin:"30px"}}  disabled={!listening}>
           Stop Listening
         </button>
       </div>
