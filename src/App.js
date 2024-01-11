@@ -1,25 +1,44 @@
-import logo from './logo.svg';
+// App.jsx
+
+import React from 'react';
+import 'regenerator-runtime/runtime';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import './App.css';
 
-function App() {
+export default function App() {
+  const { transcript, listening, resetTranscript } = useSpeechRecognition();
+
+  const startListening = () => {
+    SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
+  };
+
+  const stopListening = () => {
+    SpeechRecognition.stopListening();
+  };
+
+  const copyTextToClipboard = () => {
+    navigator.clipboard.writeText(transcript);
+    resetTranscript();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app-container'>
+      <h1>Speech To Text Converter</h1>
+      <div className='content'>
+        {transcript.length === 0 ? 'Start speaking to convert speech to text.' : transcript}
+      </div>
+
+      <div className='btn'>
+        <button onClick={copyTextToClipboard} disabled={transcript.length === 0}>
+          Copy Text
+        </button>
+        <button onClick={startListening} disabled={listening}>
+          Start Listening
+        </button>
+        <button onClick={stopListening} disabled={!listening}>
+          Stop Listening
+        </button>
+      </div>
     </div>
   );
 }
-
-export default App;
